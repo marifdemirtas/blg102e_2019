@@ -1,0 +1,44 @@
+- init:
+    run: rm -f reverse_array_input.o reverse_array_input
+    visible: false
+
+- compile:
+    run: gcc -c -std=c99 reverse_array_input.c -o reverse_array_input.o
+    blocker: true
+
+- link:
+    run: gcc -std=c99 reverse_array_input.o -o reverse_array_input
+    blocker: true
+
+- case_1:
+    run: ./reverse_array_input
+    script:
+      - expect: "Array length: "
+      - send: "10"
+      - expect: "Enter your data(.*?):+"
+      - send: "6 4 6 12 14 14 16 4 14 8"
+      - expect: " 8 14 4 16 14 14 12 6 4 6"
+      - expect: _EOF_
+    points: 10
+    
+- case_2:
+    run: ./reverse_array_input
+    script:
+      - expect: "Array length: "
+      - send: "5"
+      - expect: "Enter your data(.*?):+"
+      - send: "1 2 3 4 5"
+      - expect: " 5 4 3 2 1"
+      - expect: _EOF_
+    points: 10
+    
+- case_3:
+    run: ./reverse_array_input
+    script:
+      - expect: "Array length: "
+      - send: "5"
+      - expect: "Enter your data(.*?):+"
+      - send: "45 87 -2 -12 9"
+      - expect: " 9 -12 -2 87 45"
+      - expect: _EOF_
+    points: 10
